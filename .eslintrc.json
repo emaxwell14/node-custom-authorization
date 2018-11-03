@@ -1,3 +1,20 @@
 {
-    "extends": "airbnb-base"
+    "extends": "airbnb-base",
+    "rules": {
+        "indent": [
+            2,
+            4,
+             {
+                 "SwitchCase": 1
+             }
+         ],
+         "no-use-before-define": [
+             "error",
+             {
+                 "functions": false,
+                 "classes": true
+             }
+         ],
+         "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+     }
 }
