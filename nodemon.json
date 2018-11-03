@@ -1,0 +1,11 @@
+{
+  "verbose": true,
+  "watch": ["node_modules/", "src/"],
+  "ignore": ["*.git"],
+  "events": {
+    "restart": "echo 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
+  },
+  "env": {
+      "PORT": 3000
+    }
+}

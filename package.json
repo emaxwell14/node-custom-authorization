@@ -1,0 +1,23 @@
+{
+  "name": "AmarisBack",
+  "version": "1.0.0",
+  "description": "Eoghan Maxwell - Solution to Amaris backend coding test",
+  "main": "index.js",
+  "author": "Eoghan Maxwell",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "startDev": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.5"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}
