@@ -6,7 +6,7 @@ module.exports = {
 };
 
 function getServerPort() {
-    return parseInt(process.env.PORT, 10) || 8080;
+    return parseInt(process.env.PORT, 10) || 3000;
 }
 
 function getUserUrl() {

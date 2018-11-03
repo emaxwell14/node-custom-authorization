@@ -1,5 +1,5 @@
 const express = require('express');
-const { userService: { getUsersByUsername } } = require('../service');
+const { userService: { getUsersByUsername, getUsersById } } = require('../service');
 
 module.exports = {
     getRouter,
@@ -8,15 +8,17 @@ module.exports = {
 /**
  * Should filtering be enforced?
     Can user query all? No enforce one filter
-    Can user query with both id and username? Why not?
+    Can user query with both id and username? Confusing enforce one filter
+    Handle response generically?
  */
 function getUsers({ query: { id, username } }, res) {
-    console.log(id);
-    console.log(username);
     if (id === null && username === null) {
         throw new Error();
+    } else if (id) {
+        getUsersById(id).then(users => res.send({ users }));
+    } else {
+        getUsersByUsername(username).then(users => res.send({ users }));
     }
-    getUsersByUsername().then(users => res.send({ users, id, username }));
 }
 
 function getRouter() {
