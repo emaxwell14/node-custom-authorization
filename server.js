@@ -7,7 +7,7 @@ const api = require('./src/route');
 
 const app = express();
 const router = express.Router();
-const configService = require('./src/service/configService');
+const { configService } = require('./src/service');
 
 const port = configService.getServerPort();
 

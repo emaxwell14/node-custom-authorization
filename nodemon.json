@@ -6,6 +6,9 @@
     "restart": "echo 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
   },
   "env": {
-      "PORT": 3000
+      "PORT": 3000,
+      "DATA_SERVICE_URL": "http://www.mocky.io/v2/",
+      "DATA_SERVICE_USERS": "5808862710000087232b75ac",
+      "DATA_SERVICE_POLICIES": "580891a4100000e8242b75c5"
     }
 }
