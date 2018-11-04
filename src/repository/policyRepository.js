@@ -1,12 +1,12 @@
 const request = require('request-promise');
 const { Policy } = require('../model');
-const configService = require('../service/configService');
+const { config: { getPolicyUrl } } = require('../util');
 
 module.exports = {
     getPolicies,
 };
 
-const POLICY_URL = configService.getPolicyUrl();
+const POLICY_URL = getPolicyUrl();
 
 function getPolicies() {
     return request(POLICY_URL).then((response) => {

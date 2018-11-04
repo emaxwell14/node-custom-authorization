@@ -2,6 +2,7 @@ const { policyRepository } = require('../repository');
 
 module.exports = {
     getPolicy,
+    getPolicies,
 };
 
 function getPolicy(id) {

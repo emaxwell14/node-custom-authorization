@@ -7,9 +7,9 @@ const api = require('./src/route');
 
 const app = express();
 const router = express.Router();
-const { configService } = require('./src/service');
+const { config } = require('./src/util');
 
-const port = configService.getServerPort();
+const port = config.getServerPort();
 
 // Define middleware
 app.use(cors());
