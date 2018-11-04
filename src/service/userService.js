@@ -15,7 +15,7 @@ const USER_URL = getUserUrl();
 function getUsersWithFilter({ queryField, queryValue }) {
     return getUsers().then((users) => {
         const filteredUsers = users.filter(user => user[queryField] === queryValue);
-        return filteredUsers.map(filteredUser => new User(filteredUser));
+        return filteredUsers.map(user => new User(user));
     });
 }
 
