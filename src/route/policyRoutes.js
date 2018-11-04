@@ -1,5 +1,6 @@
 const express = require('express');
 const { policyService, FieldQuery } = require('../service');
+const { authorization: { isAdmin } } = require('../middleware');
 
 module.exports = {
     getRouter,
@@ -13,6 +14,6 @@ function getPolicies({ query: { username } }, res) {
 
 function getRouter() {
     const router = express.Router();
-    router.get('/policies/', getPolicies);
+    router.get('/policies/', isAdmin, getPolicies);
     return router;
 }

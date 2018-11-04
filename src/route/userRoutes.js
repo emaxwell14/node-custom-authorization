@@ -1,5 +1,6 @@
 const express = require('express');
 const { userService, FieldQuery } = require('../service');
+const { authorization: { isAdmin, isUser } } = require('../middleware');
 
 module.exports = {
     getRouter,
@@ -19,8 +20,8 @@ function getUsersByPolicyId({ params: { id } }, res) {
 
 function getRouter() {
     const router = express.Router();
-    router.get('/users/:id', getUser);
-    router.get('/users/username/:username', getUsersByUsername);
-    router.get('/users/policies/:id', getUsersByPolicyId);
+    router.get('/users/:id', isUser, getUser);
+    router.get('/users/username/:username', isUser, getUsersByUsername);
+    router.get('/users/policies/:id', isAdmin, getUsersByPolicyId);
     return router;
 }
