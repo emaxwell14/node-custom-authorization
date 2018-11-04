@@ -14,5 +14,5 @@ function getUserByUniqueField({ name, value }) {
 
 function getUsersByPolicyId(id) {
     return policyService.getPolicy(id)
-        .then(policy => getUserByUniqueField(new FieldQuery('id', policy.userId)));
+        .then(policy =>  getUserByUniqueField(new FieldQuery('id', policy.userId)));
 }

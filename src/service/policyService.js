@@ -6,7 +6,7 @@ module.exports = {
 };
 
 function getPolicy(id) {
-    return getPolicies().then(policies => policies.filter(policy => policy.id === id));
+    return getPolicies().then(policies => policies.find(policy => policy.id === id));
 }
 
 function getPolicies(query) {
