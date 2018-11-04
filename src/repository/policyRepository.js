@@ -8,6 +8,10 @@ module.exports = {
 
 const POLICY_URL = getPolicyUrl();
 
+/**
+ * Get all policies from the datasouce and return them as an array od
+ * domain objects
+ */
 function getPolicies() {
     return request(POLICY_URL).then((response) => {
         const responseJson = JSON.parse(response);

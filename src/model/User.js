@@ -1,3 +1,6 @@
+/**
+ * Model object for user
+ */
 class User {
     constructor({ id, name, email, role }) {
         this.id = id;

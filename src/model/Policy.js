@@ -1,3 +1,6 @@
+/**
+ * Model object for policy
+ */
 class Policy {
     constructor({ id, amountInsured, email, inceptionDate, installmentPayment, clientId }) {
         this.id = id;

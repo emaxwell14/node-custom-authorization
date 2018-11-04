@@ -6,19 +6,28 @@ const { config: { getJwtSecret } } = require('../util');
 
 module.exports = getRouter();
 
+/**
+ * Uses the local strategy to authenticate the username.
+ * Once the user is returned, logging into passport and returning
+ * a jwt token as the response.
+ */
 function doLogin(req, res, next) {
-    return passport.authenticate('local', { session: false }, (err, user) => {
+    passport.authenticate('local', { session: false }, (err, user) => {
         if (err || !user) {
-            next(new LoginError());
+            return res.status(400).send(new LoginError());
         }
 
-        req.login(user, { session: false }, () => {
+        return req.login(user, { session: false }, () => {
             const token = jwt.sign(
                 {
                     id: req.user.id,
                     username: req.user.username,
                     role: req.user.role,
-                }, getJwtSecret(),
+                },
+                getJwtSecret(),
+                {
+                    expiresIn: '12h',
+                },
             );
             return res.json({ token });
         });

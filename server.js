@@ -21,7 +21,7 @@ require('./src/middleware/authentication');
 // Define routes
 router.use(api.getRouter());
 
-// Add route in app
+// Add routes in app and authenticate all but login
 app.use('/login', loginRoute);
 app.use('/', passport.authenticate('jwt', { session: false }), router);
 

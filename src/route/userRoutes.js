@@ -6,14 +6,23 @@ module.exports = {
     getRouter,
 };
 
+/**
+ * Get user by id
+ */
 function getUser({ params: { id } }, res) {
     return userService.getUserByUniqueField(new FieldQuery('id', id)).then(user => res.send({ user }));
 }
 
+/**
+ * Get user by username
+ */
 function getUsersByUsername({ params: { username } }, res) {
     return userService.getUserByUniqueField(new FieldQuery('username', username)).then(user => res.send({ user }));
 }
 
+/**
+ * Get user by a policy id
+ */
 function getUsersByPolicyId({ params: { id } }, res) {
     return userService.getUsersByPolicyId(id).then(user => res.send({ user }));
 }

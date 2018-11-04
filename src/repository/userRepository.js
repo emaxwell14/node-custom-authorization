@@ -8,6 +8,10 @@ module.exports = {
 
 const USER_URL = getUserUrl();
 
+/**
+ * Get all users from the datasouce and return them as an array od
+ * domain objects
+ */
 function getUsers() {
     return request(USER_URL).then((response) => {
         const responseJson = JSON.parse(response);

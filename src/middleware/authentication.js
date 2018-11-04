@@ -7,6 +7,9 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const { userService, FieldQuery } = require('../service');
 const { config: { getJwtSecret } } = require('../util');
 
+/**
+ * Authentication strategy for login. Returns use by the username
+ */
 passport.use(new LocalStrategy(
     {
         usernameField: 'username',
@@ -25,6 +28,10 @@ passport.use(new LocalStrategy(
     ),
 ));
 
+/**
+ * Authentication strategy for all other endpoints. Gets the user from a JWT token in the
+ * Authorization header of each request
+ */
 passport.use(new JWTStrategy(
     {
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
