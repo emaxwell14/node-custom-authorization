@@ -1,31 +1,18 @@
-const request = require('request-promise');
-const { getUserUrl } = require('./configService');
-const { User } = require('../model');
+const { userRepository } = require('../repository');
+const policyService = require('./policyService');
+const FieldQuery = require('./FieldQuery');
 
 module.exports = {
-    getUsersWithFilter,
+    getUserByUniqueField,
+    getUsersByPolicyId,
 };
 
-const USER_URL = getUserUrl();
-
-/**
- * Getting list of all users and then filtering them based on a certain field.
- * Returning a list of User Model objets.
- */
-function getUsersWithFilter({ queryField, queryValue }) {
-    return getUsers().then((users) => {
-        const filteredUsers = users.filter(user => user[queryField] === queryValue);
-        return filteredUsers.map(user => new User(user));
-    });
+function getUserByUniqueField({ name, value }) {
+    return userRepository.getUsers()
+        .then(users => users.find(user => user[name] === value));
 }
 
-/**
- * Getting list of all users
- * Returning a list of users parsed to JSON.
- */
-function getUsers() {
-    return request(USER_URL).then((response) => {
-        const responseJson = JSON.parse(response);
-        return responseJson.clients;
-    });
+function getUsersByPolicyId(id) {
+    return policyService.getPolicy(id)
+        .then(policy => getUserByUniqueField(new FieldQuery('id', policy.userId)));
 }

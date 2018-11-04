@@ -1,5 +1,5 @@
 const express = require('express');
-const { userService: { getUsersWithFilter } } = require('../service');
+const { userService, FieldQuery } = require('../service');
 
 module.exports = {
     getRouter,
@@ -11,21 +11,22 @@ module.exports = {
  * Not allowing no params as do not want clients querying entire list.
  * Not allowing both query params as spec requests two separate enpoints.
  */
-function getUsers({ query: { id, name } }, res) {
-    if (id === null && name === null) {
-        throw new Error('Must query by id or name');
-    } else if (id && name) {
-        throw new Error('Can only query by one field');
-    }
+function getUser({ params: { id } }, res) {
+    userService.getUserByUniqueField(new FieldQuery('id', id)).then(user => res.send({ user }));
+}
 
-    const queryField = id ? 'id' : 'name';
-    const queryValue = id || name;
+function getUsersByUsername({ params: { username } }, res) {
+    userService.getUserByUniqueField(new FieldQuery('username', username)).then(user => res.send({ user }));
+}
 
-    getUsersWithFilter({ queryField, queryValue }).then(users => res.send({ users }));
+function getUsersByPolicyId({ params: { id } }, res) {
+    userService.getUsersByPolicyId(id).then(user => res.send({ user }));
 }
 
 function getRouter() {
     const router = express.Router();
-    router.get('/user/', getUsers);
+    router.get('/users/:id', getUser);
+    router.get('/users/username/:username', getUsersByUsername);
+    router.get('/users/policies/:id', getUsersByPolicyId);
     return router;
 }
