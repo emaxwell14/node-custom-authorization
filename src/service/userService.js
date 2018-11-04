@@ -8,11 +8,12 @@ module.exports = {
 };
 
 function getUserByUniqueField({ name, value }) {
+        console.log('#############################################, Eoghan - IIN service');
     return userRepository.getUsers()
         .then(users => users.find(user => user[name] === value));
 }
 
 function getUsersByPolicyId(id) {
     return policyService.getPolicy(id)
-        .then(policy =>  getUserByUniqueField(new FieldQuery('id', policy.userId)));
+        .then(policy => getUserByUniqueField(new FieldQuery('id', policy.userId)));
 }
