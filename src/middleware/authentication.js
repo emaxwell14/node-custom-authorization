@@ -29,8 +29,10 @@ passport.use(new JWTStrategy(
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
         secretOrKey: 'your_jwt_secret',
     },
-    ((jwtPayload, cb) => userService.getUserByUniqueField(new FieldQuery('id', jwtPayload.id))
-        .then(user => cb(null, user))
-        .catch(err => cb(err))
-    ),
+    ((jwtPayload, cb) => {
+        console.log('jwtPayload', jwtPayload)
+        return userService.getUserByUniqueField(new FieldQuery('id', jwtPayload.id))
+            .then(user => cb(null, user))
+            .catch(err => cb(err))
+    }),
 ));

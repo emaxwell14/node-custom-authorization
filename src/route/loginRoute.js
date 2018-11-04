@@ -1,11 +1,12 @@
 const express = require('express');
-const router = express.Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
-const doLogin = (req, res, next) => {
+module.exports = getRouter();
+
+function doLogin(req, res, next) {
     passport.authenticate('local', { session: false }, (err, user, info) => {
-        console.log('####################### in login route, error: ', info);
+        // TODO generic
         if (err || !user) {
             return res.status(400).json({
                 message: 'Something is not right',
@@ -13,15 +14,40 @@ const doLogin = (req, res, next) => {
             });
         }
 
-        req.login(user, { session: false }, (err) => {
-            if (err) {
+        req.login(user, { session: false }, (e) => {
+            if (e) {
                 res.send(err);
             }
-            console.log('####################### in login route, 3: ', user);
-            const token = jwt.sign(user, 'your_jwt_secret');
-            return res.json({ user, token });
+            const token = jwt.sign(
+                {
+                    id: req.user.id,
+                    username: req.user.username,
+                    role: req.user.role,
+                }, 'your_jwt_secret'
+            );
+            console.log('####################### token: ', token);
+            return res.json({ token });
         });
     })(req, res);
-};
+}
 
-module.exports = router.post('/', doLogin);
+
+function getRouter() {
+    // app.post(
+    //     '/auth',
+    //     passport.authenticate(
+    //         'local',
+    //         {
+    //             session: false
+    //         }
+    //     ),
+    //     serialize,
+    //     generateToken,
+    //     respond
+    // );
+
+
+    const router = express.Router();
+    router.post('/', doLogin);
+    return router;
+}
