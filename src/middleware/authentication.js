@@ -12,10 +12,8 @@ passport.use(new LocalStrategy(
         passwordField: 'username'
     },
     ((username, password, cb) => {
-        console.log('$$$$$$$ in strategy: ', username)
         userService.getUserByUniqueField(new FieldQuery('username', username))
             .then((user) => {
-                console.log('$$$$$$$ in strategy RETURNqqq: ', user)
                 if (!user) {
                     return cb(null, false, { message: 'Incorrect email or password.' });
                 }

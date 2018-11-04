@@ -8,7 +8,6 @@ module.exports = {
 };
 
 function getUserByUniqueField({ name, value }) {
-        console.log('#############################################, Eoghan - IIN service');
     return userRepository.getUsers()
         .then(users => users.find(user => user[name] === value));
 }
