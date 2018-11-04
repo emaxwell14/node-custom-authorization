@@ -7,7 +7,7 @@ module.exports = {
 
 
 function getPolicies({ query: { username } }, res) {
-    policyService.getPolicies(new FieldQuery('username', username))
+    return policyService.getPolicies(new FieldQuery('username', username))
         .then(policies => res.send({ policies }));
 }
 

@@ -21,15 +21,16 @@ require('./src/middleware/authentication');
 // Define routes
 router.use(api.getRouter());
 
-// Error handler
-// router.use((err, req, res, next) => {
-//     console.log(chalk.red('Error handler: '), err);
-//     res.status(500).send('Server Error');
-// });
-
 // Add route in app
 app.use('/login', loginRoute);
 app.use('/', passport.authenticate('jwt', { session: false }), router);
+
+// Error handler
+app.use((error, req, res, next) => {
+    console.log(chalk.red('Error handler: '), error);
+    res.status(error.status).send({ error });
+    next();
+});
 
 // Start server
 app.listen(port, (err) => {

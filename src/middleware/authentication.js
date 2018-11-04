@@ -5,21 +5,22 @@ const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const { userService, FieldQuery } = require('../service');
+const { config: { getJwtSecret } } = require('../util');
 
 passport.use(new LocalStrategy(
     {
         usernameField: 'username',
-        passwordField: 'username'
+        passwordField: 'username', // Only require username
     },
-    ((username, password, cb) => {
+    ((username, password, next) => {
         userService.getUserByUniqueField(new FieldQuery('username', username))
             .then((user) => {
                 if (!user) {
-                    return cb(null, false, { message: 'Incorrect email or password.' });
+                    return next(null, false);
                 }
-                return cb(null, user, { message: 'Logged In Successfully' });
+                return next(null, user);
             })
-            .catch(err => cb(err))
+            .catch(err => next(err));
     }
     ),
 ));
@@ -27,12 +28,10 @@ passport.use(new LocalStrategy(
 passport.use(new JWTStrategy(
     {
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey: 'your_jwt_secret',
+        secretOrKey: getJwtSecret(),
     },
-    ((jwtPayload, cb) => {
-        console.log('jwtPayload', jwtPayload)
-        return userService.getUserByUniqueField(new FieldQuery('id', jwtPayload.id))
-            .then(user => cb(null, user))
-            .catch(err => cb(err))
-    }),
+    ((jwtPayload, next) => userService.getUserByUniqueField(new FieldQuery('id', jwtPayload.id))
+        .then(user => next(null, user))
+        .catch(err => next(err))
+    ),
 ));
