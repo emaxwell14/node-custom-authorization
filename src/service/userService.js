@@ -3,25 +3,26 @@ const { getUserUrl } = require('./configService');
 const { User } = require('../model');
 
 module.exports = {
-    getUsersByUsername,
-    getUsersById,
+    getUsersWithFilter,
 };
 
 const USER_URL = getUserUrl();
 
-function getUsersByUsername(username) {
+/**
+ * Getting list of all users and then filtering them based on a certain field.
+ * Returning a list of User Model objets.
+ */
+function getUsersWithFilter({ queryField, queryValue }) {
     return getUsers().then((users) => {
-        const filteredUsers = users.filter(user => user.name === username);
-
-        console.log('filteredUsers', filteredUsers);
+        const filteredUsers = users.filter(user => user[queryField] === queryValue);
         return filteredUsers.map(filteredUser => new User(filteredUser));
     });
 }
 
-function getUsersById(id) {
-    return getUsers().then(users => users.filter(user => user.id === id));
-}
-
+/**
+ * Getting list of all users
+ * Returning a list of users parsed to JSON.
+ */
 function getUsers() {
     return request(USER_URL).then((response) => {
         const responseJson = JSON.parse(response);
