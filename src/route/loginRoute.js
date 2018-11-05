@@ -29,7 +29,7 @@ function doLogin(req, res, next) {
                     expiresIn: '12h',
                 },
             );
-            return res.json({ token });
+            return res.json({ data: token });
         });
     })(req, res);
 }

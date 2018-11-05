@@ -15,7 +15,7 @@ function getPolicies({ query: { username } }, res, next) {
         return next(new InvalidParamsError());
     }
     return policyService.getPolicies(new FieldQuery('username', username))
-        .then(policies => res.send({ policies }));
+        .then(policies => res.send({ data: policies }));
 }
 
 function getRouter() {
