@@ -7,6 +7,7 @@ const passport = require('passport');
 const api = require('./src/route');
 const loginRoute = require('./src/route/loginRoute');
 const { config } = require('./src/util');
+const { NotFoundError } = require('./src/error');
 
 const app = express();
 const router = express.Router();
@@ -25,10 +26,14 @@ router.use(api.getRouter());
 app.use('/login', loginRoute);
 app.use('/', passport.authenticate('jwt', { session: false }), router);
 
+app.get('*', (req, res, next) => {
+    next(new NotFoundError());
+});
+
 // Error handler
 app.use((error, req, res, next) => {
     console.log(chalk.red('Error handler: '), error);
-    res.status(error.status).send({ error });
+    res.status(error.status || 500).send({ error });
     next();
 });
 
