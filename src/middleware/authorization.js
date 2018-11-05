@@ -8,8 +8,8 @@ module.exports = {
 /**
  * Used to verify that a user has an ADMIN role
  */
-function isAdmin({ user: { role } }, res, next) {
-    if (role !== 'ADMIN') {
+function isAdmin({ user }, res, next) {
+    if (user && user.role !== 'ADMIN') {
         next(new AuthorizationError());
     }
     next();
@@ -19,8 +19,8 @@ function isAdmin({ user: { role } }, res, next) {
  * Used to verify that a user has a USER role.
   * ADMIN also has the same priviliges as USER
  */
-function isUser({ user: { role } }, res, next) {
-    if (!['USER', 'ADMIN'].includes(role)) {
+function isUser({ user }, res, next) {
+    if (user && !['USER', 'ADMIN'].includes(user.role)) {
         next(new AuthorizationError());
     }
     next();
