@@ -43,7 +43,7 @@ describe('User Repository', () => {
     });
 
     after(() => {
-        mockery.deregisterMock('../repository');
+        mockery.deregisterMock('request-promise');
         mockery.disable();
     });
 

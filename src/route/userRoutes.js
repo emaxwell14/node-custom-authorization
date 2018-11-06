@@ -4,6 +4,10 @@ const { authorization: { isAdmin, isUser } } = require('../middleware');
 
 module.exports = {
     getRouter,
+    // For unit tests
+    getUser,
+    getUsersByUsername,
+    getUsersByPolicyId,
 };
 
 /**
