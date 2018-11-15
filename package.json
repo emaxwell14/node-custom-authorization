@@ -1,7 +1,7 @@
 {
-  "name": "AmarisBack",
+  "name": "nodeCustomAuthorization",
   "version": "1.0.0",
-  "description": "Eoghan Maxwell - Solution to Amaris backend coding test",
+  "description": "Solution to a backend coding test. Includes Passport authentication and a custom authorization",
   "main": "index.js",
   "author": "Eoghan Maxwell",
   "license": "MIT",
